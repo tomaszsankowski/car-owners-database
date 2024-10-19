@@ -25,8 +25,8 @@ public class Car implements Serializable, Comparable<Car> {
 
     private String model;
 
-    @Column(name = "`year`")
-    private int year;
+    @Column(name = "production_year")
+    private int productionYear;
 
     private int power;
 

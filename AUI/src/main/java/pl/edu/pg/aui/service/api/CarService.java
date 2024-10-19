@@ -17,7 +17,7 @@ public interface CarService {
 
     List<Car> findAll();
 
-    Optional<List<Car>> findAll(Person owner);
+    List<Car> findAll(Person owner);
 
     List<Car> findAll(UUID ownerId);
 

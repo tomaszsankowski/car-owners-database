@@ -30,7 +30,7 @@ public class Person implements Serializable, Comparable<Person> {
     private  int age;
 
     @Builder.Default
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Car> cars = new ArrayList<>();
 

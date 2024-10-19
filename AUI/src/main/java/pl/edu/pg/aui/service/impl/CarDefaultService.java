@@ -14,14 +14,12 @@ import java.util.UUID;
 
 @Service
 public class CarDefaultService implements CarService {
+
     private final CarRepository carRepository;
 
-    private final PersonRepository personRepository;
-
     @Autowired
-    public CarDefaultService(CarRepository carRepository, PersonRepository personRepository) {
+    public CarDefaultService(CarRepository carRepository) {
         this.carRepository = carRepository;
-        this.personRepository = personRepository;
     }
 
     @Override
@@ -45,8 +43,8 @@ public class CarDefaultService implements CarService {
     }
 
     @Override
-    public Optional<List<Car>> findAll(Person owner) {
-        return Optional.ofNullable(carRepository.findAllByOwner(owner));
+    public List<Car> findAll(Person owner) {
+        return carRepository.findAllByOwner(owner);
     }
 
     @Override

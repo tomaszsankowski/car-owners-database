@@ -158,7 +158,7 @@ public class ApplicationCommand implements CommandLineRunner {
                                     .id(UUID.randomUUID())
                                     .brand(brand)
                                     .model(model)
-                                    .year(year)
+                                    .productionYear(year)
                                     .power(power)
                                     .plate(plate)
                                     .owner(owner.get())
