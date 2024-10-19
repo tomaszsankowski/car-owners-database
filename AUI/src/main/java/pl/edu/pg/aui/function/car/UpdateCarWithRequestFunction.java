@@ -1,27 +1,23 @@
 package pl.edu.pg.aui.function.car;
 
 import org.springframework.stereotype.Component;
-import pl.edu.pg.aui.dto.car.PutCarRequest;
+import pl.edu.pg.aui.dto.car.PatchCarRequest;
 import pl.edu.pg.aui.model.Car;
-import pl.edu.pg.aui.model.Person;
 
-import java.util.UUID;
 import java.util.function.BiFunction;
 
 @Component
-public class UpdateCarWithRequestFunction implements BiFunction<UUID, PutCarRequest, Car> {
+public class UpdateCarWithRequestFunction implements BiFunction<Car, PatchCarRequest, Car> {
 
     @Override
-    public Car apply(UUID id, PutCarRequest putCarRequest) {
+    public Car apply(Car car, PatchCarRequest patchCarRequest) {
         return Car.builder()
-                .brand(putCarRequest.getBrand())
-                .model(putCarRequest.getModel())
-                .power(putCarRequest.getPower())
-                .productionYear(putCarRequest.getProductionYear())
-                .plate(putCarRequest.getPlate())
-                .owner(Person.builder()
-                        .id(putCarRequest.getOwner())
-                        .build())
+                .brand(patchCarRequest.getBrand())
+                .model(patchCarRequest.getModel())
+                .power(patchCarRequest.getPower())
+                .productionYear(patchCarRequest.getProductionYear())
+                .plate(car.getPlate())
+                .owner(car.getOwner())
                 .build();
     }
 }

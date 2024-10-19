@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 public class PatchPersonRequest {
+
     private String name;
 
     private String surname;

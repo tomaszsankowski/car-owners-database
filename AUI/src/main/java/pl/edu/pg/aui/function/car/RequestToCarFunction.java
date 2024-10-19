@@ -7,7 +7,6 @@ import pl.edu.pg.aui.model.Person;
 
 import java.util.UUID;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 @Component
 public class RequestToCarFunction implements BiFunction<UUID, PutCarRequest, Car> {

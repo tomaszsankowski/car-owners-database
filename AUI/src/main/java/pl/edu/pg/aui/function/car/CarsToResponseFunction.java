@@ -1,28 +1,25 @@
 package pl.edu.pg.aui.function.car;
 
 import org.springframework.stereotype.Component;
-import pl.edu.pg.aui.dto.car.GetCarResponse;
+import pl.edu.pg.aui.dto.car.GetCarsResponse;
 import pl.edu.pg.aui.model.Car;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Component
-public class CarsToResponseFunction implements Function<Car, GetCarResponse> {
+public class CarsToResponseFunction implements Function<List<Car>, GetCarsResponse> {
 
     @Override
-    public GetCarResponse apply(Car car) {
-        return GetCarResponse.builder()
-                .id(car.getId())
-                .brand(car.getBrand())
-                .model(car.getModel())
-                .power(car.getPower())
-                .productionYear(car.getProductionYear())
-                .plate(car.getPlate())
-                .owner(GetCarResponse.Person.builder()
-                        .id(car.getOwner().getId())
-                        .name(car.getOwner().getName())
-                        .surname(car.getOwner().getSurname())
-                        .build())
+    public GetCarsResponse apply(List<Car> cars) {
+        return GetCarsResponse.builder()
+                .cars(cars.stream()
+                        .map(car -> GetCarsResponse.Car.builder()
+                                .id(car.getId())
+                                .brand(car.getBrand())
+                                .model(car.getModel())
+                                .build())
+                        .toList())
                 .build();
     }
 }
