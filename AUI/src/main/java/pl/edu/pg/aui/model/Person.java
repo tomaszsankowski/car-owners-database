@@ -1,28 +1,38 @@
-package pl.edu.pg.aui.entity;
+package pl.edu.pg.aui.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import pl.edu.pg.aui.dto.CarDTO;
 
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "cars")
 @EqualsAndHashCode(exclude = "cars")
+@Entity
+@Table(name = "persons")
 public class Person implements Serializable, Comparable<Person> {
-    String name;
+    @Id
+    private UUID id;
 
-    String surname;
+    private String name;
 
-    int age;
+    private String surname;
+
+    private  int age;
 
     @Builder.Default
-    List<Car> cars = new ArrayList<>();
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Car> cars = new ArrayList<>();
 
     @Override
     public int compareTo(Person other) {
