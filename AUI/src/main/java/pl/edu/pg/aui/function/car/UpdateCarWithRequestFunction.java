@@ -12,6 +12,7 @@ public class UpdateCarWithRequestFunction implements BiFunction<Car, PatchCarReq
     @Override
     public Car apply(Car car, PatchCarRequest patchCarRequest) {
         return Car.builder()
+                .id(car.getId())
                 .brand(patchCarRequest.getBrand())
                 .model(patchCarRequest.getModel())
                 .power(patchCarRequest.getPower())

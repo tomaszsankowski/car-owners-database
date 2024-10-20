@@ -66,7 +66,11 @@ public class CarDefaultController implements CarController {
 
     @Override
     public void putCar(UUID id, PutCarRequest car) {
-        service.create(requestToCarFunction.apply(id, car));
+        try {
+            service.create(requestToCarFunction.apply(id, car));
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner not found", e);
+        }
     }
 
     @Override

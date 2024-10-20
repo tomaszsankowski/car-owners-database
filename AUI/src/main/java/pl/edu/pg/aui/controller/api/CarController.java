@@ -16,7 +16,7 @@ public interface CarController {
     @ResponseBody
     GetCarsResponse getCars();
 
-    @GetMapping("api/users/{userId}/cars")
+    @GetMapping("api/persons/{userId}/cars")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     GetCarsResponse getUserCars(@PathVariable UUID userId);
