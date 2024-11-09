@@ -1,0 +1,65 @@
+### Get all persons
+
+GET http://localhost:8082/api/persons
+
+###
+
+### Get single person
+
+GET http://localhost:8082/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6
+
+###
+
+### Get single person, not existing
+
+GET http://localhost:8082/api/persons/3c6f1eb1-1111-44ab-988f-d7fed2b65d87
+
+###
+
+### Create new person
+
+PUT http://localhost:8082/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f6688
+Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI=
+
+{
+  "name": "Jan",
+  "surname": "Walczak",
+  "age": 99
+}
+
+###
+
+### Update person
+
+PATCH http://localhost:8082/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6
+Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI=
+
+{
+  "name": "Jan",
+  "surname": "Rogowski",
+  "age": 20
+}
+
+###
+
+### Update person, not existing
+
+PATCH http://localhost:8082/api/persons/11111111-1111-47dd-9b56-9d1e3c7a4197
+Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI=
+
+{
+  "name": "Jan",
+  "surname": "Walczak",
+  "age": 20
+}
+
+###
+
+### Delete person
+
+DELETE http://localhost:8082/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6
+
+###

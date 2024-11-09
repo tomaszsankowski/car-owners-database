@@ -1,0 +1,110 @@
+### Get all cars
+
+GET http://localhost:8080/api/cars
+
+###
+
+### Get single car
+
+GET http://localhost:8080/api/cars/f5875513-bf7b-4ae1-b8a5-5b70a1b90e76
+
+###
+
+### Get single car, not existing
+GET http://localhost:8080/api/cars/3c6f1eb1-1111-44ab-988f-d7fed2b65d87
+
+###
+
+### Get person cars
+
+GET http://localhost:8080/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6/cars
+
+###
+
+### Get person cars, empty
+
+GET http://localhost:8080/api/persons/ed6cfb2a-cad7-47dd-9b56-9d1e3c7a4197/cars
+
+###
+
+### Get person cars, person not existing
+
+GET http://localhost:8080/api/persons/11111111-1111-47dd-9b56-9d1e3c7a4197/cars
+
+###
+
+### Create new car
+
+PUT http://localhost:8080/api/cars/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6
+Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI=
+
+{
+  "brand": "Mazda",
+  "model": "CX-60",
+  "productionYear": 2010,
+  "power": 200,
+  "plate": "WA12345",
+  "owner": "c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"
+}
+
+###
+
+### Create new car, not existing owner
+
+PUT http://localhost:8080/api/cars/3c6f1eb1-1111-44ab-988f-d7fed2b65d87
+Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI=
+
+{
+  "brand": "Mazda",
+  "model": "CX-60",
+  "productionYear": 2010,
+  "power": 200,
+  "plate": "WA12345",
+  "owner": "11111111-1111-47dd-9b56-9d1e3c7a4197"
+}
+
+###
+
+### Update car
+
+PATCH http://localhost:8080/api/cars/f5875513-bf7b-4ae1-b8a5-5b70a1b90e76
+Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI=
+
+{
+  "brand": "Audi",
+  "model": "RS6",
+  "productionYear": 2010,
+  "power": 200
+}
+
+###
+
+### Update car, not existing
+
+PATCH http://localhost:8080/api/cars/3c6f1eb1-1111-44ab-988f-d7fed2b65d87
+Content-Type: application/json
+Authorization: Basic a2V2aW46dXNlcnVzZXI=
+
+{
+  "brand": "Audi",
+  "model": "A4",
+  "productionYear": 2010,
+  "power": 150
+}
+
+###
+
+### Delete car
+
+DELETE http://localhost:8080/api/cars/f5875513-bf7b-4ae1-b8a5-5b70a1b90e76
+
+###
+
+### Delete car, not existing
+
+DELETE http://localhost:8080/api/cars/3c6f1eb1-1111-44ab-988f-d7fed2b65d87
+
+###
