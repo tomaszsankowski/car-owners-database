@@ -12,6 +12,4 @@ import java.util.UUID;
 public interface PersonRepository extends JpaRepository<Person, UUID> {
 
     Optional<Person> findByNameAndSurname(String name, String surname);
-
-    List<Person> findByAge(int age);
 }

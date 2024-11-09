@@ -17,9 +17,12 @@ public class CarDefaultService implements CarService {
 
     private final CarRepository carRepository;
 
+    private final PersonRepository personRepository;
+
     @Autowired
-    public CarDefaultService(CarRepository carRepository) {
+    public CarDefaultService(CarRepository carRepository, PersonRepository personRepository) {
         this.carRepository = carRepository;
+        this.personRepository = personRepository;
     }
 
     @Override
@@ -48,13 +51,9 @@ public class CarDefaultService implements CarService {
     }
 
     @Override
-    public List<Car> findAll(UUID ownerId) {
-        return carRepository.findAllByOwnerId(ownerId);
-    }
-
-    @Override
-    public List<Car> findAll(String name, String surname) {
-        return carRepository.findAllByOwnerNameAndOwnerSurname(name, surname);
+    public Optional<List<Car>> findAllByOwner(UUID ownerId) {
+        return personRepository.findById(ownerId)
+                .map(carRepository::findAllByOwner);
     }
 
     @Override

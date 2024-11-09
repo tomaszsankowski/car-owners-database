@@ -21,4 +21,5 @@ public interface PersonService {
     void delete(UUID id);
 
     void delete(Person person);
+
 }

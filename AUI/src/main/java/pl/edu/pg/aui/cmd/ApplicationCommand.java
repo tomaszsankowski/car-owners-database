@@ -106,7 +106,7 @@ public class ApplicationCommand implements CommandLineRunner {
                 case "get_person_cars" -> {
                     UUID uuid = UUID.fromString(scanner.next());
                     try {
-                        System.out.println(writer.writeValueAsString(carService.findAll(uuid)));
+                        System.out.println(writer.writeValueAsString(carService.findAllByOwner(uuid)));
                     } catch (NoSuchElementException ex) {
                         System.out.println("NOT_FOUND");
                     }

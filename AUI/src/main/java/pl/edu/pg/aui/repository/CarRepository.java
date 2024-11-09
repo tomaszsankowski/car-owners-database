@@ -17,8 +17,4 @@ public interface CarRepository extends JpaRepository<Car, UUID> {
     Optional<Car> findByBrandAndModel(String brand, String model);
 
     List<Car> findAllByOwner(Person owner);
-
-    List<Car> findAllByOwnerId(UUID ownerId);
-
-    List<Car> findAllByOwnerNameAndOwnerSurname(String name, String surname);
 }
