@@ -1,4 +1,4 @@
-package pl.edu.pg.aui.initizalize;
+package pl.edu.pg.aui.initialize;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +11,14 @@ import pl.edu.pg.aui.service.api.PersonService;
 import java.util.UUID;
 
 @Component
-public class InitizalizeData implements InitializingBean {
+public class InitializeData implements InitializingBean {
 
     private final CarService carService;
 
     private final PersonService personService;
 
     @Autowired
-    public InitizalizeData(CarService carService, PersonService personService) {
+    public InitializeData(CarService carService, PersonService personService) {
         this.carService = carService;
         this.personService = personService;
     }
@@ -31,7 +31,7 @@ public class InitizalizeData implements InitializingBean {
                     .id(UUID.fromString("c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"))
                     .name("Admin")
                     .surname("Admin")
-                    .age(100)
+                    .age(99)
                     .build();
             Person person2 = Person.builder()
                     .id(UUID.fromString("81e1c2a9-7f57-439b-b53d-6db88b071e4e"))

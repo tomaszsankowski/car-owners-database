@@ -45,7 +45,7 @@ GET http://localhost:8080/api/persons/ed6cfb2a-cad7-47dd-9b56-9d1e3c7a4197/cars
 
 ###
 
-### Get person cars, not existing
+### Get person cars, person not existing
 
 GET http://localhost:8080/api/persons/11111111-1111-47dd-9b56-9d1e3c7a4197/cars
 
@@ -62,7 +62,7 @@ Authorization: Basic a2V2aW46dXNlcnVzZXI=
     "model": "CX-60",
     "productionYear": 2010,
     "power": 200,
-    "plate": "WA 12345",
+    "plate": "WA12345",
     "owner": "c4804e0f-769e-4ab9-9ebe-0578fb4f00a6"
 }
 
@@ -79,7 +79,7 @@ Authorization: Basic a2V2aW46dXNlcnVzZXI=
     "model": "CX-60",
     "productionYear": 2010,
     "power": 200,
-    "plate": "WA 12345",
+    "plate": "WA12345",
     "owner": "11111111-1111-47dd-9b56-9d1e3c7a4197"
 }
 
@@ -92,9 +92,9 @@ Content-Type: application/json
 Authorization: Basic a2V2aW46dXNlcnVzZXI=
 
 {
-    "firstName": "Jan",
-    "lastName": "Walczak",
-    "age": 20
+    "name": "Jan",
+    "surname": "Walczak",
+    "age": 99
 }
 
 ###
@@ -108,8 +108,8 @@ Authorization: Basic a2V2aW46dXNlcnVzZXI=
 {
     "brand": "Audi",
     "model": "RS6",
-    "productionYear": 2019,
-    "power": 600
+    "productionYear": 2010,
+    "power": 200
 }
 
 ###
@@ -172,19 +172,5 @@ DELETE http://localhost:8080/api/cars/3c6f1eb1-1111-44ab-988f-d7fed2b65d87
 ### Delete person
 
 DELETE http://localhost:8080/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6
-
-###
-
-### Show cars and persons again
-
-GET http://localhost:8080/api/cars
-
-###
-
-GET http://localhost:8080/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f00a6/cars
-
-###
-
-GET http://localhost:8080/api/persons
 
 ###

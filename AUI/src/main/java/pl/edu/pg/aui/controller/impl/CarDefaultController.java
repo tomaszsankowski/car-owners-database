@@ -3,6 +3,8 @@ package pl.edu.pg.aui.controller.impl;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pg.aui.controller.api.CarController;
@@ -16,10 +18,12 @@ import pl.edu.pg.aui.function.car.RequestToCarFunction;
 import pl.edu.pg.aui.function.car.UpdateCarWithRequestFunction;
 import pl.edu.pg.aui.service.api.CarService;
 
+import jakarta.validation.Valid;
 import java.util.UUID;
 
 @RestController
 @Log
+@Validated
 public class CarDefaultController implements CarController {
 
     private final CarService service;
@@ -65,7 +69,7 @@ public class CarDefaultController implements CarController {
     }
 
     @Override
-    public void putCar(UUID id, PutCarRequest car) {
+    public void putCar(UUID id, @Valid @RequestBody PutCarRequest car) {
         try {
             service.create(requestToCarFunction.apply(id, car));
         } catch (IllegalArgumentException e) {
@@ -74,7 +78,7 @@ public class CarDefaultController implements CarController {
     }
 
     @Override
-    public void patchCar(UUID id, PatchCarRequest car) {
+    public void patchCar(UUID id, @Valid @RequestBody PatchCarRequest car) {
         service.update(updateCarWithRequestFunction.apply(service.find(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found")), car));
     }

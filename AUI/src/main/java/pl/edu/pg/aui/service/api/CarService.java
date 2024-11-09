@@ -32,4 +32,5 @@ public interface CarService {
     void delete(String brand, String model);
 
     void delete(Car car);
+
 }

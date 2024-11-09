@@ -3,6 +3,8 @@ package pl.edu.pg.aui.controller.impl;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import pl.edu.pg.aui.controller.api.PersonController;
@@ -15,12 +17,13 @@ import pl.edu.pg.aui.function.person.PersonsToResponseFunction;
 import pl.edu.pg.aui.function.person.RequestToPersonFunction;
 import pl.edu.pg.aui.function.person.UpdatePersonWithRequestFunction;
 import pl.edu.pg.aui.service.api.PersonService;
-import pl.edu.pg.aui.service.impl.PersonDefaultService;
 
+import jakarta.validation.Valid;
 import java.util.UUID;
 
 @RestController
 @Log
+@Validated
 public class PersonDefaultController implements PersonController {
 
     private final PersonService service;
@@ -60,12 +63,12 @@ public class PersonDefaultController implements PersonController {
     }
 
     @Override
-    public void putPerson(UUID id, PutPersonRequest person) {
+    public void putPerson(UUID id, @Valid @RequestBody PutPersonRequest person) {
         service.create(requestToPersonFunction.apply(id, person));
     }
 
     @Override
-    public void patchPerson(UUID id, PatchPersonRequest person) {
+    public void patchPerson(UUID id, @Valid @RequestBody PatchPersonRequest person) {
         service.update(updatePersonWithRequestFunction.apply(service.find(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found")), person));
     }
