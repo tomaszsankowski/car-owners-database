@@ -75,6 +75,10 @@ public class PersonDefaultController implements PersonController {
 
     @Override
     public void deletePerson(UUID id) {
-        service.delete(id);
+        try {
+            service.delete(id);
+        } catch (ResponseStatusException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Person not found");
+        }
     }
 }

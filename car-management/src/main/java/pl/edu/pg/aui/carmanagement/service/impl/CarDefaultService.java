@@ -1,13 +1,14 @@
 package pl.edu.pg.aui.carmanagement.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
+import pl.edu.pg.aui.carmanagement.dto.PutCarRequest;
 import pl.edu.pg.aui.carmanagement.model.Car;
-import pl.edu.pg.aui.carmanagement.model.Person;
 import pl.edu.pg.aui.carmanagement.repository.CarRepository;
 import pl.edu.pg.aui.carmanagement.service.api.CarService;
 
@@ -21,7 +22,6 @@ public class CarDefaultService implements CarService {
     private final CarRepository carRepository;
 
     private final RestTemplate restTemplate;
-
     @Autowired
     public CarDefaultService(CarRepository carRepository, RestTemplate restTemplate) {
         this.carRepository = carRepository;
@@ -49,14 +49,13 @@ public class CarDefaultService implements CarService {
     }
 
     @Override
-    public Optional<List<Car>> findAll(UUID ownerId) {
-        String personServiceUrl = "http://localhost:8082/persons/" + ownerId;
-
+    public Optional<List<Car>> findAllByOwnerId(UUID ownerId) {
         try {
-            restTemplate.getForEntity(personServiceUrl, Void.class);
+            String url = "${person.management.url}" + ownerId;
+            restTemplate.getForObject(url, Void.class);
             List<Car> cars = carRepository.findAllByOwnerId(ownerId);
-            return cars.isEmpty() ? Optional.empty() : Optional.of(cars);
-        } catch (HttpClientErrorException.NotFound e) {
+            return Optional.of(cars);
+        } catch (HttpClientErrorException e) {
             return Optional.empty();
         }
     }
@@ -73,7 +72,9 @@ public class CarDefaultService implements CarService {
 
     @Override
     public void delete(UUID id) {
-        carRepository.findById(id).ifPresent(carRepository::delete);
+        Car car = carRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
+        carRepository.delete(car);
     }
 
     @Override
@@ -91,4 +92,15 @@ public class CarDefaultService implements CarService {
         carRepository.delete(car);
     }
 
+    @Override
+    public void deleteAllUserCars(UUID userId) {
+        try {
+            String url = "${person.management.url}/" + userId;
+            restTemplate.getForObject(url, Void.class);
+            List<Car> cars = carRepository.findAllByOwnerId(userId);
+            carRepository.deleteAll(cars);
+        } catch (HttpClientErrorException e) {
+            throw new IllegalArgumentException("Owner not found");
+        }
+    }
 }

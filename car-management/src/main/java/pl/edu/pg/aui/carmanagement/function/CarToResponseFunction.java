@@ -1,6 +1,7 @@
 package pl.edu.pg.aui.carmanagement.function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -22,25 +23,21 @@ public class CarToResponseFunction implements Function<Car, GetCarResponse> {
 
     @Override
     public GetCarResponse apply(Car car) {
-        GetCarResponse.Person owner = fetchOwnerData(car.getOwnerId());
-
-        return GetCarResponse.builder()
-                .id(car.getId())
-                .brand(car.getBrand())
-                .model(car.getModel())
-                .power(car.getPower())
-                .productionYear(car.getProductionYear())
-                .plate(car.getPlate())
-                .owner(owner)
-                .build();
-    }
-
-    private GetCarResponse.Person fetchOwnerData(UUID ownerId) {
         try {
-            String url = "http://localhost:8080/persons/" + ownerId;
-            return restTemplate.getForObject(url, GetCarResponse.Person.class);
+            String url = "${person.management.url}" + car.getOwnerId();
+            GetCarResponse.Person owner = restTemplate.getForObject(url, GetCarResponse.Person.class);
+            return GetCarResponse.builder()
+                    .id(car.getId())
+                    .brand(car.getBrand())
+                    .model(car.getModel())
+                    .power(car.getPower())
+                    .productionYear(car.getProductionYear())
+                    .plate(car.getPlate())
+                    .owner(owner)
+                    .build();
         } catch (HttpClientErrorException e) {
-            throw new RuntimeException("Owner not found");
+            throw new IllegalArgumentException("Owner not found");
         }
     }
+
 }

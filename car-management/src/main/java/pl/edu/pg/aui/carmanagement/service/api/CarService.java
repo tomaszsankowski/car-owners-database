@@ -16,7 +16,7 @@ public interface CarService {
 
     List<Car> findAll();
 
-    Optional<List<Car>> findAll(UUID owner);
+    Optional<List<Car>> findAllByOwnerId(UUID owner);
 
     void create(Car car);
 
@@ -29,5 +29,7 @@ public interface CarService {
     void delete(String brand, String model);
 
     void delete(Car car);
+
+    void deleteAllUserCars(UUID userId);
 
 }

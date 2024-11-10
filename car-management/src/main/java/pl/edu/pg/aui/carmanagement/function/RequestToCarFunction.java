@@ -5,7 +5,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import pl.edu.pg.aui.carmanagement.dto.PutCarRequest;
 import pl.edu.pg.aui.carmanagement.model.Car;
-import pl.edu.pg.aui.carmanagement.model.Person;
 
 import java.util.UUID;
 import java.util.function.BiFunction;
@@ -22,25 +21,20 @@ public class RequestToCarFunction implements BiFunction<UUID, PutCarRequest, Car
     @Override
     public Car apply(UUID id, PutCarRequest putCarRequest) {
         try {
-            String url = "http://localhost:8080/persons/" + putCarRequest.getOwner();
+            String url = "${person.management.url}" + putCarRequest.getOwner();
             restTemplate.getForObject(url, Void.class);
+            return Car.builder()
+                    .id(id)
+                    .brand(putCarRequest.getBrand())
+                    .model(putCarRequest.getModel())
+                    .power(putCarRequest.getPower())
+                    .productionYear(putCarRequest.getProductionYear())
+                    .plate(putCarRequest.getPlate())
+                    .ownerId(putCarRequest.getOwner())
+                    .build();
         } catch (HttpClientErrorException e) {
-            if (e.getStatusCode().is4xxClientError()) {
-                throw new IllegalArgumentException("Owner not found");
-            }
-            else {
-                throw e;
-            }
+            throw new IllegalArgumentException("Owner not found");
         }
-
-        return Car.builder()
-                .id(id)
-                .brand(putCarRequest.getBrand())
-                .model(putCarRequest.getModel())
-                .power(putCarRequest.getPower())
-                .productionYear(putCarRequest.getProductionYear())
-                .plate(putCarRequest.getPlate())
-                .ownerId(putCarRequest.getOwner())
-                .build();
     }
 }
+

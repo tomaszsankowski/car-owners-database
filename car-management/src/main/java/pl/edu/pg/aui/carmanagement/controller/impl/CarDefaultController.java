@@ -55,17 +55,17 @@ public class CarDefaultController implements CarController {
     }
 
     @Override
-    public GetCarsResponse getUserCars(UUID userId) {
-        return service.findAll(userId)
-                .map(carsToResponseFunction)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-    }
-
-    @Override
     public GetCarResponse getCar(UUID id) {
         return service.find(id)
                 .map(carToResponseFunction)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
+    }
+
+    @Override
+    public GetCarsResponse getUserCars(UUID userId) {
+        return service.findAllByOwnerId(userId)
+                .map(carsToResponseFunction)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner not found"));
     }
 
     @Override
@@ -85,7 +85,20 @@ public class CarDefaultController implements CarController {
 
     @Override
     public void deleteCar(UUID id) {
-        service.delete(id);
+        try {
+            service.delete(id);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found", e);
+        }
+    }
+
+    @Override
+    public void deleteAllUserCars(UUID userId) {
+        try {
+            service.deleteAllUserCars(userId);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Owner not found", e);
+        }
     }
 
 }

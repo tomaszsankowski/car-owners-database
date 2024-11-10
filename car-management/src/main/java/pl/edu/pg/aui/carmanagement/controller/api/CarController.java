@@ -43,4 +43,7 @@ public interface CarController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteCar(@PathVariable("id") UUID id);
 
+    @DeleteMapping("/persons/{userId}/cars")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteAllUserCars(@PathVariable("userId") UUID userId);
 }
