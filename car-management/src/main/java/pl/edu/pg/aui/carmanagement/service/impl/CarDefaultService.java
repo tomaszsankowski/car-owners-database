@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
-import pl.edu.pg.aui.carmanagement.dto.PutCarRequest;
 import pl.edu.pg.aui.carmanagement.model.Car;
 import pl.edu.pg.aui.carmanagement.repository.CarRepository;
 import pl.edu.pg.aui.carmanagement.service.api.CarService;
@@ -22,10 +21,14 @@ public class CarDefaultService implements CarService {
     private final CarRepository carRepository;
 
     private final RestTemplate restTemplate;
+
+    private final String personManagementUrl;
+
     @Autowired
-    public CarDefaultService(CarRepository carRepository, RestTemplate restTemplate) {
+    public CarDefaultService(CarRepository carRepository, RestTemplate restTemplate, @Value("${person.management.url}") String personManagementUrl) {
         this.carRepository = carRepository;
         this.restTemplate = restTemplate;
+        this.personManagementUrl = personManagementUrl;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class CarDefaultService implements CarService {
     @Override
     public Optional<List<Car>> findAllByOwnerId(UUID ownerId) {
         try {
-            String url = "${person.management.url}" + ownerId;
+            String url = personManagementUrl + "/" + ownerId;
             restTemplate.getForObject(url, Void.class);
             List<Car> cars = carRepository.findAllByOwnerId(ownerId);
             return Optional.of(cars);
@@ -95,7 +98,7 @@ public class CarDefaultService implements CarService {
     @Override
     public void deleteAllUserCars(UUID userId) {
         try {
-            String url = "${person.management.url}/" + userId;
+            String url = personManagementUrl + "/" + userId;
             restTemplate.getForObject(url, Void.class);
             List<Car> cars = carRepository.findAllByOwnerId(userId);
             carRepository.deleteAll(cars);

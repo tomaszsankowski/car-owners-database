@@ -1,5 +1,6 @@
 package pl.edu.pg.aui.carmanagement.function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -14,14 +15,17 @@ public class RequestToCarFunction implements BiFunction<UUID, PutCarRequest, Car
 
     private final RestTemplate restTemplate;
 
-    public RequestToCarFunction(RestTemplate restTemplate) {
+    private final String personManagementUrl;
+
+    public RequestToCarFunction(RestTemplate restTemplate, @Value("${person.management.url}") String personManagementUrl) {
         this.restTemplate = restTemplate;
+        this.personManagementUrl = personManagementUrl;
     }
 
     @Override
     public Car apply(UUID id, PutCarRequest putCarRequest) {
         try {
-            String url = "${person.management.url}" + putCarRequest.getOwner();
+            String url = personManagementUrl + "/" + putCarRequest.getOwner();
             restTemplate.getForObject(url, Void.class);
             return Car.builder()
                     .id(id)
@@ -37,4 +41,3 @@ public class RequestToCarFunction implements BiFunction<UUID, PutCarRequest, Car
         }
     }
 }
-

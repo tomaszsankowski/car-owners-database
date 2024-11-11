@@ -18,7 +18,7 @@ GET http://localhost:8082/api/persons/3c6f1eb1-1111-44ab-988f-d7fed2b65d87
 
 ### Create new person
 
-PUT http://localhost:8082/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f6688
+PUT http://localhost:8082/api/persons/c4804e0f-769e-4ab9-9ebe-0578fb4f6689
 Content-Type: application/json
 Authorization: Basic a2V2aW46dXNlcnVzZXI=
 
@@ -39,7 +39,7 @@ Authorization: Basic a2V2aW46dXNlcnVzZXI=
 {
   "name": "Jan",
   "surname": "Rogowski",
-  "age": 20
+  "age": 10
 }
 
 ###

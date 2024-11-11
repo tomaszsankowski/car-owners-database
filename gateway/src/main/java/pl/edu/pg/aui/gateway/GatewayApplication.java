@@ -17,9 +17,12 @@ public class GatewayApplication {
     @Bean
     public RouteLocator routeLocator(
             RouteLocatorBuilder builder,
-            @Value("${aui.personmanagement.url") String personUrl,
-            @Value("${aui.carmanagement.url") String carUrl,
-            @Value("${aui.gateway.host") String host
+            @Value("${aui.personmanagement.url}")
+            String personUrl,
+            @Value("${aui.carmanagement.url}")
+            String carUrl,
+            @Value("${aui.gateway.host}")
+            String host
     ) {
         return builder
                 .routes()
