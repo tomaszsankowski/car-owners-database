@@ -1,6 +1,6 @@
 <ul class="list-group">
   <li class="list-group-item d-flex justify-content-between align-items-start mb-2 border px-4 py-3 rounded-3" *ngFor="let person of persons?.persons">
-    <div class="flex-grow-1 mouse-hover">
+    <div class="flex-grow-1 mouse-hover" (click)="selectPerson(person.id)">
       <div class="div fw-bold">{{person.name}}</div>
       <div class="div fw-bold">{{person.surname}}</div>
     </div>
@@ -9,3 +9,5 @@
     </span>
   </li>
 </ul>
+
+<button class="btn btn-primary" routerLink="/add">Add New Person</button>

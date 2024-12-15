@@ -1,1 +1,16 @@
-<p>person-details works!</p>
+<div *ngIf="person">
+  <h2>{{ person.name }} {{ person.surname }}</h2>
+  <p>Age: {{ person.age }}</p>
+</div>
+
+<div *ngIf="cars">
+  <h3>Cars</h3>
+  <ul>
+    <li *ngFor="let car of cars?.cars">
+      {{ car.brand }} {{ car.model }}
+    </li>
+  </ul>
+</div>
+<div class="mt-3">
+  <button class="btn btn-secondary" [routerLink]="['/edit', personId]" [disabled]="!personId">Edit Selected Person</button>
+</div>
