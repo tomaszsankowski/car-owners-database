@@ -1,0 +1,25 @@
+<h1>{{ isEditMode ? 'Edit Car' : 'Add Car' }}</h1>
+
+<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="brand" class="form-label">Brand</label>
+    <input id="brand" class="form-control" formControlName="brand">
+  </div>
+  <div class="mb-3">
+    <label for="model" class="form-label">Model</label>
+    <input id="model" class="form-control" formControlName="model">
+  </div>
+  <div class="mb-3">
+    <label for="productionYear" class="form-label">Production Year</label>
+    <input id="productionYear" class="form-control" formControlName="productionYear">
+  </div>
+  <div class="mb-3">
+    <label for="power" class="form-label">Power</label>
+    <input id="power" class="form-control" formControlName="power">
+  </div>
+  <div class="mb-3">
+    <label for="plate" class="form-label">Plate</label>
+    <input id="plate" class="form-control" formControlName="plate">
+  </div>
+  <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update' : 'Add' }}</button>
+</form>

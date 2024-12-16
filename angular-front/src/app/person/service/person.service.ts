@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment.development';
 import { Persons } from '../model/persons.model';
 import { Cars } from '../../car/model/cars.model';
 import { PersonDetails } from '../model/person-details.model';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,16 @@ export class PersonService {
     return this.http.get<Cars>(`${this.url}/${id}/cars`);
   }
 
-  addPerson(person: PersonDetails) {
-    return this.http.post<PersonDetails>(this.url, person);
+  addPerson(id: string, person: PersonDetails) {
+    return this.http.put<PersonDetails>(`${this.url}/${id}`, person);
   }
 
   updatePerson(id: string, person: PersonDetails) {
-    return this.http.put<PersonDetails>(`${this.url}/${id}`, person);
+    return this.http.patch<PersonDetails>(`${this.url}/${id}`, person);
   }
+
+  deletePerson(personID: string): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${personID}`);
+  }
+
 }

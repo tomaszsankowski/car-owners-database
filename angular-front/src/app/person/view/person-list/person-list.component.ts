@@ -22,10 +22,20 @@ export class PersonListComponent implements OnInit{
   persons: Persons | undefined;
 
   ngOnInit(): void {
+    this.refreshPersons();
+  }
+
+  refreshPersons(): void {
     this.service.getPersons().subscribe(persons => this.persons = persons);
   }
 
   selectPerson(personId: string): void {
     this.router.navigate([`/${personId}`]);
+  }
+
+  deletePerson(personId: string): void {
+    this.service.deletePerson(personId).subscribe(() => {
+      this.refreshPersons(); // Reload the list after deletion
+    });
   }
 }

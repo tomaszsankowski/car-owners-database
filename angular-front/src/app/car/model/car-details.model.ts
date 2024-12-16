@@ -12,6 +12,4 @@ export interface CarDetails {
 
   plate: string;
 
-  ownerId: number;
-
 }
