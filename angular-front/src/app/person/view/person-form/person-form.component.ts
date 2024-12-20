@@ -4,12 +4,14 @@ import { PersonService } from '../../service/person.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonDetails } from '../../model/person-details.model';
 import {v4 as uuidv4} from 'uuid';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-person-form',
   templateUrl: './person-form.component.html',
   imports: [
     ReactiveFormsModule,
+    NgIf,
   ],
   styleUrls: ['./person-form.component.css']
 })
@@ -25,9 +27,9 @@ export class PersonFormComponent implements OnInit {
     private router: Router
   ) {
     this.personForm = this.fb.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      age: ['', Validators.required]
+      name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
+      surname: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
+      age: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
     });
   }
 

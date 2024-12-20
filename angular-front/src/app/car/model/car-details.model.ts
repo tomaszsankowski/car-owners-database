@@ -6,9 +6,9 @@ export interface CarDetails {
 
   model: string;
 
-  productionYear: number;
-
   power: number;
+
+  productionYear: number;
 
   plate: string;
 

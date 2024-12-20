@@ -4,12 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from '../../service/car.service';
 import { CarDetails } from '../../model/car-details.model';
 import {v4 as uuidv4} from 'uuid';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-car-form',
   templateUrl: './car-form.component.html',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   styleUrls: ['./car-form.component.css']
 })
@@ -26,11 +28,11 @@ export class CarFormComponent implements OnInit {
     private router: Router
   ) {
     this.carForm = this.fb.group({
-      brand: ['', Validators.required],
-      model: ['', Validators.required],
-      productionYear: ['', Validators.required],
-      power: ['', Validators.required],
-      plate: ['', Validators.required]
+      brand: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
+      model: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
+      productionYear: ['', [Validators.required, Validators.min(1900), Validators.max(2100)]],
+      power: ['', [Validators.required, Validators.min(1), Validators.max(2000)]],
+      plate: ['', [Validators.required, Validators.pattern('^[A-Z0-9-]{5,10}$')]]
     });
   }
 
