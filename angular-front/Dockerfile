@@ -1,4 +1,8 @@
 FROM nginx:alpine
-COPY . /usr/share/nginx/html
+
+ENV API_URL=http://localhost:8080/api
+
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+ADD ./dist/angular-front /usr/share/nginx/html
+ADD docker/etc/nginx/templates/ /etc/nginx/templates/
