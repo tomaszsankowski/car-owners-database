@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Building angular-front project"
 npm install
-npm run build
+npm run build --prod
 # shellcheck disable=SC2181
 if [ $? -ne 0 ]; then
   echo "Build failed for angular-front project"

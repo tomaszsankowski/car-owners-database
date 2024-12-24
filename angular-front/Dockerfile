@@ -1,8 +1,6 @@
-FROM nginx:alpine
+FROM nginx:latest
 
-ENV API_URL=http://localhost:8080/api
+COPY ./dist/angular-front/browser /usr/share/nginx/html
+COPY ./nginx.conf  /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
-ADD ./dist/angular-front /usr/share/nginx/html
-ADD docker/etc/nginx/templates/ /etc/nginx/templates/
