@@ -1,0 +1,32 @@
+<h1>{{ isEditMode ? 'Edit Person' : 'Add Person' }}</h1>
+
+<form [formGroup]="personForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input id="name" class="form-control" formControlName="name">
+    <div *ngIf="personForm.get('name')?.invalid && personForm.get('name')?.touched" class="text-danger">
+      <div *ngIf="personForm.get('name')?.errors?.['required']">Name is required.</div>
+      <div *ngIf="personForm.get('name')?.errors?.['minlength']">Name must be at least 1 character.</div>
+      <div *ngIf="personForm.get('name')?.errors?.['maxlength']">Name must be at most 20 characters.</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="surname" class="form-label">Surname</label>
+    <input id="surname" class="form-control" formControlName="surname">
+    <div *ngIf="personForm.get('surname')?.invalid && personForm.get('surname')?.touched" class="text-danger">
+      <div *ngIf="personForm.get('surname')?.errors?.['required']">Surname is required.</div>
+      <div *ngIf="personForm.get('surname')?.errors?.['minlength']">Surname must be at least 1 character.</div>
+      <div *ngIf="personForm.get('surname')?.errors?.['maxlength']">Surname must be at most 20 characters.</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="age" class="form-label">User Age</label>
+    <input id="age" class="form-control" formControlName="age">
+    <div *ngIf="personForm.get('age')?.invalid && personForm.get('age')?.touched" class="text-danger">
+      <div *ngIf="personForm.get('age')?.errors?.['required']">Age is required.</div>
+      <div *ngIf="personForm.get('age')?.errors?.['min']">Age must be at least 1.</div>
+      <div *ngIf="personForm.get('age')?.errors?.['max']">Age must be at most 100.</div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="personForm.invalid">{{ isEditMode ? 'Update' : 'Add' }}</button>
+</form>

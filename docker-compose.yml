@@ -1,0 +1,83 @@
+services:
+  angular-app:
+    build:
+      context: ./angular-front
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - gateway-app
+    container_name: car-owners-front-end
+
+  gateway-app:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    environment:
+      - GATEWAY_HOST=localhost:8080
+      - CAR_URL=http://car-owners-car-microservice:8080
+      - PERSON_URL=http://car-owners-person-microservice:8080
+    depends_on:
+      - car-app
+      - person-app
+    container_name: car-owners-gateway
+    ports:
+      - "8080:8080"
+
+  car-app:
+    build:
+      context: ./car-management
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://car-db:3306/car-database
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_DRIVERCLASSNAME=com.mysql.cj.jdbc.Driver
+      - PERSON_URL=http://car-owners-person-microservice:8080/api/persons
+      - SERVER_PORT=8080
+    depends_on:
+      - car-db
+    container_name: car-owners-car-microservice
+
+  person-app:
+    build:
+      context: ./person-management
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://person-db:3306/person-database
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_DRIVERCLASSNAME=com.mysql.cj.jdbc.Driver
+      - PERSON_URL=http://car-owners-car-microservice:8080/api/persons
+      - SERVER_PORT=8080
+    depends_on:
+      - person-db
+    container_name: car-owners-person-microservice
+
+  person-db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=person-database
+    ports:
+      - "3306:3306"
+    volumes:
+      - person-db-data:/var/lib/mysql
+    container_name: car-owners-person-database
+
+  car-db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=car-database
+    ports:
+      - "3307:3306"
+    volumes:
+      - car-db-data:/var/lib/mysql
+    container_name: car-owners-car-database
+
+volumes:
+  person-db-data:
+  car-db-data:

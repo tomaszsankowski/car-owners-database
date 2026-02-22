@@ -1,0 +1,49 @@
+<h1>{{ isEditMode ? 'Edit Car' : 'Add Car' }}</h1>
+
+<form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="brand" class="form-label">Brand</label>
+    <input id="brand" class="form-control" formControlName="brand">
+    <div *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched" class="text-danger">
+      <div *ngIf="carForm.get('brand')?.errors?.['required']">Brand is required.</div>
+      <div *ngIf="carForm.get('brand')?.errors?.['minlength']">Brand must be at least 1 character.</div>
+      <div *ngIf="carForm.get('brand')?.errors?.['maxlength']">Brand must be at most 20 characters.</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="model" class="form-label">Model</label>
+    <input id="model" class="form-control" formControlName="model">
+    <div *ngIf="carForm.get('model')?.invalid && carForm.get('model')?.touched" class="text-danger">
+      <div *ngIf="carForm.get('model')?.errors?.['required']">Model is required.</div>
+      <div *ngIf="carForm.get('model')?.errors?.['minlength']">Model must be at least 1 character.</div>
+      <div *ngIf="carForm.get('model')?.errors?.['maxlength']">Model must be at most 20 characters.</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="productionYear" class="form-label">Production Year</label>
+    <input id="productionYear" class="form-control" formControlName="productionYear">
+    <div *ngIf="carForm.get('productionYear')?.invalid && carForm.get('productionYear')?.touched" class="text-danger">
+      <div *ngIf="carForm.get('productionYear')?.errors?.['required']">Production Year is required.</div>
+      <div *ngIf="carForm.get('productionYear')?.errors?.['min']">Production Year must be at least 1900.</div>
+      <div *ngIf="carForm.get('productionYear')?.errors?.['max']">Production Year must be at most 2100.</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="power" class="form-label">Power</label>
+    <input id="power" class="form-control" formControlName="power">
+    <div *ngIf="carForm.get('power')?.invalid && carForm.get('power')?.touched" class="text-danger">
+      <div *ngIf="carForm.get('power')?.errors?.['required']">Power is required.</div>
+      <div *ngIf="carForm.get('power')?.errors?.['min']">Power must be at least 1.</div>
+      <div *ngIf="carForm.get('power')?.errors?.['max']">Power must be at most 2000.</div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="plate" class="form-label">Plate</label>
+    <input id="plate" class="form-control" formControlName="plate" [readonly]="isEditMode" [class.readonly]="isEditMode">
+    <div *ngIf="carForm.get('plate')?.invalid && carForm.get('plate')?.touched" class="text-danger">
+      <div *ngIf="carForm.get('plate')?.errors?.['required']">Plate is required.</div>
+      <div *ngIf="carForm.get('plate')?.errors?.['pattern']">Plate must be between 5 and 10 alphanumeric characters.</div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="carForm.invalid">{{ isEditMode ? 'Update' : 'Add' }}</button>
+</form>

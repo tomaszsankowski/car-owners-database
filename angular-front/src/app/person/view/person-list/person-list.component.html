@@ -1,0 +1,13 @@
+<ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center mb-2 border px-4 py-3 rounded-3" *ngFor="let person of persons?.persons">
+    <div class="flex-grow-1 mouse-hover" (click)="selectPerson(person.id)">
+      <div class="div fw-bold">{{person.name}}</div>
+      <div class="div fw-bold">{{person.surname}}</div>
+    </div>
+    <span class="text-secondary">
+      <i class="fa-solid fa-trash-can fa-lg mouse-hover" (click)="deletePerson(person.id)"></i>
+    </span>
+  </li>
+</ul>
+
+<button class="btn btn-primary" routerLink="/add">Add New Person</button>

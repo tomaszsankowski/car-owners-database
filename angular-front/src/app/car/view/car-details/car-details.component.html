@@ -1,0 +1,16 @@
+<div *ngIf="carDetails">
+  <div class="list-group-item d-flex justify-content-between align-items-center mb-2 border px-4 py-3 rounded-3">
+    <div>
+      <h2>{{ carDetails.brand }} {{ carDetails.model }}</h2>
+      <ul>
+        <li><strong>Production Year:</strong> {{ carDetails.productionYear }}</li>
+        <li><strong>Power:</strong> {{ carDetails.power }} HP</li>
+        <li><strong>Plate:</strong> {{ carDetails.plate }}</li>
+      </ul>
+    </div>
+    <div class="d-flex flex-column">
+      <button class="btn btn-primary mb-2" [routerLink]="['edit']" [disabled]="!carDetails.id">Edit Car</button>
+      <button class="btn btn-danger" (click)="deleteCar()">Delete Car</button>
+    </div>
+  </div>
+</div>
